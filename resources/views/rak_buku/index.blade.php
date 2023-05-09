@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Daftar Rak Buku')
-@section('content')
-<h2>Daftar Rak Buku</h2>
+@section('content') <h2>Daftar Rak Buku</h2>
 <div class="send_bt">
     <a href="{{ url('rak_buku/create') }}">Tambah</a>
 </div>
