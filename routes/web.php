@@ -35,3 +35,8 @@ Route::get('/buku', function () {
     // $data = 'latihan';
     return view('buku/list', ['data' => $data]);
 });
+
+Route::get('/rak_buku', function () {
+    $rak = [];
+    return view('rak_buku/index', ['rak' => $rak]);
+});
