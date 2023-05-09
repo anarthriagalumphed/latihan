@@ -42,7 +42,5 @@ Route::get('/buku', function () {
     return view('buku/list', $data);
 });
 
-Route::get('/rak_buku', function () {
-    $rak = [];
-    return view('rak_buku/index', ['rak' => $rak]);
-});
+
+Route::resource('rak_buku', RakBukuController::class);

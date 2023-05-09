@@ -10,8 +10,8 @@
     <input type="hidden" name="id" value="{{ $rak->id }}" />
     <input type="text" class="mail_text" name="nama" placeholder="Nama 
 Rak" value="{{ $rak->nama }}" />
-    <input type="text" class="mail_text" name="lokasi" placeholder="Lokasi" value="{{ $rak->lokasi }}" />
-    <input type="text" class="mail_text" name="keterangan" placeholder="keterangan" value="{{ $rak->keterangan }}" />
+    <input type="text" class="mail_text" name="lokasi" placeholder="Lokasi" value="{{ $rak->lokasi }}" />
+    <input type="text" class="mail_text" name="keterangan" placeholder="keterangan" value="{{ $rak->keterangan }}" />
     <input type="submit" value="{{ $store }}" />
     <div class="send_bt">
         <a href="{{ url('/rak_buku') }}">Kembali</a>
