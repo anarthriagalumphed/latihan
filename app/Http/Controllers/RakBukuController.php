@@ -10,10 +10,12 @@ class RakBukuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $rak = RakBuku::all();
-        return view('rak_buku.index', ['rak' => $rak]);
+    public function index(Request $request)
+{
+$rak = RakBuku::all();
+$this->pre($request->session()->all());
+return view('rak_buku.index', ['rak' => $rak]);
+
     }
     /**
      * Show the form for creating a new resource.
@@ -29,14 +31,20 @@ class RakBukuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $rak = new RakBuku();
-        $rak->nama = $request->input('nama');
-        $rak->lokasi = $request->input('lokasi');
-        $rak->keterangan = $request->input('keterangan');
-        $rak->save();
-        return redirect('/rak_buku');
-    }
+{
+$rak = new RakBuku();
+$rak->nama = $request->input('nama');
+$rak->lokasi = $request->input('lokasi');
+$rak->keterangan = $request->input('keterangan');
+$validated = $request->validate([
+    'nama' => 'required | max:50',
+    'lokasi' => 'required | max:50'
+]);
+if ($validated){
+    $rak->save();
+}
+return redirect('/rak_buku');
+}
     /**
      * Display the specified resource.
      */
@@ -58,19 +66,36 @@ class RakBukuController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, RakBuku $rakBuku)
-    {
-        $rakBuku->nama = $request->input('nama');
-        $rakBuku->lokasi = $request->input('lokasi');
-        $rakBuku->keterangan = $request->input('keterangan');
-        $rakBuku->save();
-        return redirect('/rak_buku');
-    }
+{
+$rakBuku->nama = $request->input('nama');
+$rakBuku->lokasi = $request->input('lokasi');
+$rakBuku->keterangan = $request->input('keterangan');
+$validated = $request->validate([
+    'nama' => 'required | max:50',
+    'lokasi' => 'required | max:50'
+]);
+if ($validated){
+    $rak->save();
+}
+return redirect('/rak_buku');
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RakBuku $rakBuku)
-    {
-        $rakBuku->delete();
-        return redirect('/rak_buku');
-    }
+    public function destroy (Request $request ,RakBuku  $rakBuku)
+{
+$rakBuku->delete();
+$request->session()->flash('pesan', 'Data telah berhasil dihapus.');
+return redirect('/rak_buku');
+}
+
+
+private function pre($arr = []){
+    echo'<pre>';
+    print_r($arr);
+    echo '</pre>';
+}
+
+
+
 }
