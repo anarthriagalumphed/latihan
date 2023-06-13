@@ -37,7 +37,7 @@
     <div class="header_section">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="logo" href="#"><img src="/web-template/images/logo.png"></a>
+                <a class="logo" href="/rak_buku"><img src="/web-template/images/logo.png"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">

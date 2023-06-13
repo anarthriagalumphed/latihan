@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RakBuku;
 use Illuminate\Http\Request;
-
+use Validator;
 class RakBukuController extends Controller
 {
     /**
@@ -36,11 +36,15 @@ $rak = new RakBuku();
 $rak->nama = $request->input('nama');
 $rak->lokasi = $request->input('lokasi');
 $rak->keterangan = $request->input('keterangan');
-$validated = $request->validate([
-    'nama' => 'required | max:50',
-    'lokasi' => 'required | max:50'
-]);
-if ($validated){
+$rm = $this->rules_messages();
+$validator = Validator::make($request->all(), $rm['rules'], $messages = $rm['messages']);
+if ($validator->fails()) {
+    return redirect('/rak_buku/create')
+    ->withErrors($validator)
+    ->withInput();
+}
+$validated = $validator->validate();
+if($validated){
     $rak->save();
 }
 return redirect('/rak_buku');
@@ -65,17 +69,21 @@ return redirect('/rak_buku');
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RakBuku $rakBuku)
+public function update(Request $request, RakBuku $rakBuku)
 {
 $rakBuku->nama = $request->input('nama');
 $rakBuku->lokasi = $request->input('lokasi');
 $rakBuku->keterangan = $request->input('keterangan');
-$validated = $request->validate([
-    'nama' => 'required | max:50',
-    'lokasi' => 'required | max:50'
-]);
-if ($validated){
-    $rak->save();
+$rm = $this->rules_messages();
+$validator = Validator::make($request->all(), $rm['rules'], $messages = $rm['messages']);
+if ($validator->fails()){
+    return redirect('/rak_buku'. $rakBuku->id.'/edit')
+    ->withErrors($validator)
+    ->withInput();
+}
+$validated = $validator->validate();
+if($validated){
+    $rakBuku->save();
 }
 return redirect('/rak_buku');
 }
@@ -96,6 +104,20 @@ private function pre($arr = []){
     echo '</pre>';
 }
 
-
+private function rules_messages(){
+    $rules = [
+        'nama' => 'required |max:50',
+        'lokasi' => 'required |max:5'
+    ];
+    $messages = [
+        'required' => 'Kolom ini harus diisi.',
+        'max' => 'Karakter yang diisi melebihi ketentuan'
+    ];
+    $data = [
+        'rules' => $rules,
+        'messages' => $messages
+    ];
+    return $data;
+}
 
 }
